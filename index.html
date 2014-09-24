@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="javascripts/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/jquery.v2.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/underscore.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/backbone.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/two.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/carota.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/four.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+<body>
+
+
+<script>
+	var four;
+	$(function() {
+		four = new Four();
+		$('body').append(four.domElement);	
+		run();
+	})
+
+	function run() {
+		var grp = draw(0,0,50,50);
+		four.group.add(grp);
+	}
+
+	function draw( x, y, width, height) {
+
+		var grp = new Four.Group({ selectable: true });
+		
+		var img = document.createElement("img");
+		img.onload = function() {
+			render();
+		};
+		img.src="square.jpg";
+
+		var render = function() {
+			var box = new Four.Rectangle({ x: x, y: y, width: width+4, height: height+4});
+			box.stroke="black";
+			grp.add(box);
+
+			var image = new Four.Image({ x: x, y: y, width: width, height: height, image: img});
+			grp.add(image);
+
+			var text = new Four.Input({ x: x, y: y, width: width, height: height});
+			grp.add(text);
+
+			four.on('update', function(frameCount) {
+			  if (grp.scale > 0.9999) {
+			    grp.scale = grp.rotation = 0;
+			  }
+			  var t = (1 - grp.scale) * 0.125;
+			  grp.scale += t;
+			  grp.rotation += t * 4 * Math.PI;
+			});
+
+			four.group.add(grp);
+		}
+
+		return grp;
+
+	};
+
+</script>
+</body>
+</html>
