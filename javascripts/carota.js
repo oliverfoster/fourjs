@@ -839,7 +839,12 @@
 				
 				        var ctx = canvas.getContext('2d');
 				        ctx.clearRect(0, 0, canvas.width, canvas.height);
-				
+						ctx.scale((window.devicePixelRatio*2),(window.devicePixelRatio*2));
+						ctx.shadowColor = "#050505";
+						ctx.shadowOffsetX = 0;
+						ctx.shadowOffsetY = 0;
+						ctx.shadowBlur = 4;
+
 				        doc.draw(ctx);
 				        doc.drawSelection(ctx, selectDragStart || (document.activeElement === textArea));
 
@@ -1836,7 +1841,7 @@
 				exports.formattingKeys = [ 'bold', 'italic', 'underline', 'strikeout', 'color', 'font', 'size', 'align', 'script' ];
 				
 				exports.defaultFormatting = {
-				    size: 10,
+				    size: 32,
 				    font: 'sans-serif',
 				    color: 'black',
 				    bold: false,

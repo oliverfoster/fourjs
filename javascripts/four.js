@@ -233,8 +233,8 @@ $(function() {
 			"left":"-100%",
 			"top":"0",
 			"right":"0",
-			"height":settings.height,
-			"width":settings.height
+			"height":settings.height*(window.devicePixelRatio*2),
+			"width":settings.width*(window.devicePixelRatio*2)
 		})
 		var editor = carota.editor.create(ele, {mouseEventer: text });
 		$(ele).css({

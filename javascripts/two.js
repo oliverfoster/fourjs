@@ -4986,7 +4986,7 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
           var props = [this.image, this._vertices[0]._x, -this._vertices[2]._y, (this._vertices[2]._x - this._vertices[0]._x) ,(this._vertices[2]._y - this._vertices[0]._y)];
 	        ctx.drawImage.apply(ctx, props);
         } else if (this.canvas) {
-          var props = [this.canvas, this._vertices[0]._x, -this._vertices[2]._y, (this._vertices[2]._x - this._vertices[0]._x) ,(this._vertices[2]._y - this._vertices[0]._y)];
+          var props = [this.canvas, this._vertices[0]._x, -this._vertices[2]._y, (this._vertices[2]._x - this._vertices[0]._x) , (this._vertices[2]._y - this._vertices[0]._y)];
           ctx.drawImage.apply(ctx, props);
 
 	      } else if (this.text) {
@@ -4996,6 +4996,10 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
         } else {
 
           ctx.beginPath();
+          ctx.shadowColor = "#050505";
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 0;
+          ctx.shadowBlur = 1;
           commands.forEach(function(b, i) {
 
             x = toFixed(b.x);

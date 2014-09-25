@@ -22,7 +22,7 @@
 	})
 
 	function run() {
-		var grp = draw(0,0,50,50);
+		var grp = draw(0,0,250,50);
 		four.group.add(grp);
 	}
 
@@ -40,9 +40,13 @@
 			var box = new Four.Rectangle({ x: x, y: y, width: width+4, height: height+4});
 			box.stroke="black";
 			grp.add(box);
+			var box = new Four.Rectangle({ x: x, y: y, width: width+5, height: height+5});
+			box.stroke="black";
+
+			grp.add(box);
 
 			var image = new Four.Image({ x: x, y: y, width: width, height: height, image: img});
-			grp.add(image);
+			//grp.add(image);
 
 			var text = new Four.Input({ x: x, y: y, width: width, height: height});
 			grp.add(text);
