@@ -22,11 +22,14 @@
 	})
 
 	function run() {
-		var grp = draw(0,0,250,50);
+		var grp = draw(0,0,250,50, 0);
+		four.group.add(grp);
+
+		var grp = draw(50,50,250,50, 1);
 		four.group.add(grp);
 	}
 
-	function draw( x, y, width, height) {
+	function draw( x, y, width, height, ss) {
 
 		var grp = new Four.Group({ selectable: true });
 		
@@ -50,6 +53,15 @@
 
 			var text = new Four.Input({ x: x, y: y, width: width, height: height});
 			grp.add(text);
+
+			switch(ss) {
+			case 0:
+				text.nextInsertFormatting.font = "sans-serif";
+				break;
+			case 1:
+				text.nextInsertFormatting.font = "serif";
+				break;
+			}
 
 			four.on('update', function(frameCount) {
 			  if (grp.scale > 0.9999) {

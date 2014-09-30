@@ -1,4 +1,15 @@
 $(function() {
+	var extend = function() {
+		if (arguments.length < 2) throw new Error("No enough arguments in extend function");
+		var to = arguments[0];
+		for (var a = 1; a < arguments.length; a++) {
+			var from = arguments[a];
+			for (var k in from) {
+				to[k] = from[k];
+			}
+		}
+		return to;
+	};
 
 	var Four = window.Four = function(settings) {
 		if (!settings) settings = {};
@@ -65,6 +76,19 @@ $(function() {
 		return this;
 	}
 
+	Four.Foundation = function () {};
+	_.extend(Four.Foundation.prototype, Backbone.Events);
+	Object.defineProperty(Four.Foundation.prototype, 'json', {
+		set: function(v) {
+			this.__json = v;
+		},
+		get: function() {
+			return this.__json;
+		},
+		enumerable: true
+	});
+
+
 	Four.Group = function(settings, o) {
 		var objects = o;
 		if (settings && !_.isArray(settings)) {
@@ -81,13 +105,19 @@ $(function() {
 		var group = new Two.Group();
 
 		if (settings.selectable === true) group.selectable = true;
+		if (settings.interactive === true) Two.addInteractivity(group);
+
+		_.extend(this, settings);
 
 		group.add(objects);
 
-		Two.addInteractivity(group);
+		this.__group = group;
 
-		return group;
+		return this;
 	};
+	Four.Group.prototype = [];
+	extend(Four.Group.prototype, Four.Foundation.prototype);
+
 
 	Four.Line = function(settings) {
 		var width = settings.x2 - settings.x1;
@@ -107,6 +137,7 @@ $(function() {
 		Two.addInteractivity(line);
 		return line;
   	};
+  	_.extend(Four.Line, Four.Foundation);
 
 	Four.Rectangle = function(settings) {
 		var w2 = settings.width / 2;
@@ -126,21 +157,29 @@ $(function() {
 
 		return rect;
 	};
+	_.extend(Four.Rectangle, Four.Foundation);
+
 	Four.Image = function(settings) {
 		var rect = new Four.Rectangle(settings);
 		rect.image = settings.image;
 		return rect;
 	};
+	_.extend(Four.Image, Four.Foundation);
+
 	Four.Text = function(settings) {
 		var rect = new Four.Rectangle(settings);
 		rect.text = settings.text;
 		return rect;
 	};
+	_.extend(Four.Text, Four.Foundation);
+
 	Four.Canvas = function(settings) {
 		var rect = new Four.Rectangle(settings);
 		rect.canvas = settings.canvas;
 		return rect;
 	};
+	_.extend(Four.Canvas, Four.Foundation);
+
 	Four.Ellipse = function(settings) {
 		var amount = Two.Resolution;
 
@@ -159,12 +198,16 @@ $(function() {
 
 		return ellipse;
 	}
+	_.extend(Four.Ellipse, Four.Foundation);
+
 	Four.Circle = function(settings) {
 		settings.width = settings.radius;
 		settings.height = settings.radius;
 		var ellipse = new Four.Ellipse(settings);
 		return ellipse;
 	}
+	_.extend(Four.Circle, Four.Foundation);
+
 	Four.Polygon = function(settings) {
 		var l = arguments.length, points = settings.points;
 		if (!_.isArray(p)) {
@@ -189,6 +232,8 @@ $(function() {
 
 		return poly;
 	}
+	_.extend(Four.Polygon, Four.Foundation);
+
 	Four.Curve = function(settings) {
 		var l = arguments.length, points = settings.points;
 		if (!_.isArray(p)) {
@@ -221,6 +266,8 @@ $(function() {
 
 		return poly;
 	}
+	_.extend(Four.Curve, Four.Foundation);
+
 	Four.Input = function(settings) {
 		var grp = new Four.Group({selectable: true});
 
@@ -236,12 +283,15 @@ $(function() {
 			"height":settings.height*(window.devicePixelRatio*2),
 			"width":settings.width*(window.devicePixelRatio*2)
 		})
-		var editor = carota.editor.create(ele, {mouseEventer: text });
+		
+		this.editor = carota.editor.create(ele, { mouseCaptureElement: text });
+		this.nextInsertFormatting = this.editor.nextInsertFormatting;
 		$(ele).css({
 			"position": "fixed",
 
 		});
-		text.canvas = editor.canvas;
+		text.canvas = this.editor.canvas;
+		this.canvas = this.editor.canvas;
 
 		grp.add(text);
 
@@ -249,10 +299,15 @@ $(function() {
 			text.canvas = canvas;
 		});
 
-		return grp;
-	}
+		this.group = grp;
+		this.element = ele;
+		this.settings = settings;
 
-	_.extend(Four.prototype, Backbone.Events);
+		return this;
+	}
+	_.extend(Four.Group, Four.Foundation);
+
+	_.extend(Four.prototype, Four.Foundation);
 	_.extend(Four.prototype, {
 		resize: function() {
 			this.svg.update();

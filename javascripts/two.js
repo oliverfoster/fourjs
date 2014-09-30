@@ -3349,6 +3349,15 @@ var Backbone = Backbone || {};
       }
     });
 
+  Object.defineProperty(Two, 'loopInterval', {
+        get: function() {
+          return this.renderer.scene;
+        },
+        set: function(v) {
+          this.renderer.scene = v;
+        }
+      });
+
   // Request Animation Frame
   var animateFunc = _.throttle(function() {
 
@@ -3363,6 +3372,7 @@ var Backbone = Backbone || {};
     });
 
   },62.5);
+  
   animateFunc();
 
   //exports to multiple environments
