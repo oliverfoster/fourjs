@@ -23,10 +23,10 @@
 
 	function run() {
 		var grp = draw(0,0,250,50, 0);
-		four.group.add(grp);
+		four.scene.add(grp);
 
 		var grp = draw(50,50,250,50, 1);
-		four.group.add(grp);
+		four.scene.add(grp);
 	}
 
 	function draw( x, y, width, height, ss) {
@@ -42,19 +42,21 @@
 		var render = function() {
 			var box = new Four.Rectangle({ x: x, y: y, width: width+4, height: height+4});
 			box.stroke="black";
+			
 			grp.add(box);
+
 			var box = new Four.Rectangle({ x: x, y: y, width: width+5, height: height+5});
 			box.stroke="black";
 
 			grp.add(box);
 
 			var image = new Four.Image({ x: x, y: y, width: width, height: height, image: img});
-			//grp.add(image);
+			grp.add(image);
 
-			var text = new Four.Input({ x: x, y: y, width: width, height: height});
-			grp.add(text);
+			//var text = new Four.Input({ x: x, y: y, width: width, height: height});
+			//grp.add(text);
 
-			switch(ss) {
+			/*switch(ss) {
 			case 0:
 				text.nextInsertFormatting.font = "sans-serif";
 				break;
@@ -70,9 +72,8 @@
 			  var t = (1 - grp.scale) * 0.125;
 			  grp.scale += t;
 			  grp.rotation += t * 4 * Math.PI;
-			});
+			});*/
 
-			four.group.add(grp);
 		}
 
 		return grp;
