@@ -66,12 +66,12 @@
 			}*/
 
 			four.on('update', function(frameCount) {
-			  if (grp.scale > 0.9999) {
-			    grp.scale = grp.rotationRadians = 0;
+			  if (four.scene.scale > 0.9999) {
+			    four.scene.scale = four.scene.rotationRadians = 0;
 			  }
-			  var t = (1 - grp.scale) * 0.125;
-			  grp.scale += t;
-			  grp.rotationDegrees = grp.scale * (360);
+			  var t = (1 - four.scene.scale) * 0.125;
+			  four.scene.scale += t;
+			  four.scene.rotationDegrees = four.scene.scale * (360);
 			});
 
 		}

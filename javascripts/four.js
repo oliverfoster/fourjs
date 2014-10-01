@@ -148,10 +148,12 @@ $(function() {
 
 			var thisHandle = this;
 			this.__svg.unbind('update');
+			this.__canvas.play(); 
+			this.__svg.play();
+			
 			this.__svg.bind('update', function(frameCount) {
-				thisHandle.__canvas.update();
 				thisHandle.trigger("update");
-			}).play();
+			});
 		},
 		load: function(json) {
 			scene.json = json;
