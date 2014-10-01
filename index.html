@@ -22,16 +22,16 @@
 	})
 
 	function run() {
-		var grp = draw(0,0,250,50, 0);
+		var grp = draw("0px","0px" ,"250px","50px", 0);
 		four.scene.add(grp);
 
-		var grp = draw(50,50,250,50, 1);
+		var grp = draw("50px","50px","250px","50px", 1);
 		four.scene.add(grp);
 	}
 
 	function draw( x, y, width, height, ss) {
 
-		var grp = new Four.Group({ selectable: true });
+		var grp = new Four.Group({ x:x, y:y, width:width, height:height, selectable: true });
 		
 		var img = document.createElement("img");
 		img.onload = function() {
@@ -40,12 +40,12 @@
 		img.src="square.jpg";
 
 		var render = function() {
-			var box = new Four.Rectangle({ x: x, y: y, width: width+4, height: height+4});
+			var box = new Four.Rectangle({ x: x, y: y, width: parseInt(width)+4, height: parseInt(height)+4});
 			box.stroke="black";
 			
 			grp.add(box);
 
-			var box = new Four.Rectangle({ x: x, y: y, width: width+5, height: height+5});
+			var box = new Four.Rectangle({ x: x, y: y, width: parseInt(width)+5, height: parseInt(height)+5});
 			box.stroke="black";
 
 			grp.add(box);
@@ -63,16 +63,16 @@
 			case 1:
 				text.nextInsertFormatting.font = "serif";
 				break;
-			}
+			}*/
 
 			four.on('update', function(frameCount) {
 			  if (grp.scale > 0.9999) {
-			    grp.scale = grp.rotation = 0;
+			    grp.scale = grp.rotationRadians = 0;
 			  }
 			  var t = (1 - grp.scale) * 0.125;
 			  grp.scale += t;
-			  grp.rotation += t * 4 * Math.PI;
-			});*/
+			  grp.rotationDegrees = grp.scale * (360);
+			});
 
 		}
 
