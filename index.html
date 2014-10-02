@@ -8,6 +8,7 @@
 		<script src="javascripts/two.js" type="text/javascript" charset="utf-8"></script>
 		<script src="javascripts/carota.js" type="text/javascript" charset="utf-8"></script>
 		<script src="javascripts/four.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/model.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
 	</head>
 <body>
@@ -15,10 +16,35 @@
 
 <script>
 	var four;
+
+	var globalJSON = {
+		test: {
+			test2: 1
+		},
+		test2: {
+			test3: 2,
+			text4: 3
+		}
+	};
+	var global;
+
 	$(function() {
 		four = new Four();
 		$('body').append(four.domElement);	
 		run();
+
+		global = model(globalJSON, "global");
+
+		global.on("change", function() {
+			console.log("Change:");
+			console.log(arguments);
+		});
+		global.on("add", function() {
+			console.log("Add:");
+			console.log(arguments);
+		});
+
+
 	})
 
 	function run() {
