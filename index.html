@@ -24,7 +24,11 @@
 		test2: {
 			test3: 2,
 			text4: 3
-		}
+		},
+		text3: [
+			"fuck",
+			"balls"
+		]
 	};
 	var global;
 
@@ -35,19 +39,26 @@
 
 		global = model(globalJSON, "global");
 
-		global.on("change", function() {
-			console.log("Change:");
+		global.on("ChangeProperty", function() {
+			console.log("ChangeProperty:");
+			console.log(arguments);
+		});
+		global.on("ChangeObject", function() {
+			console.log("ChangeObject:");
 			console.log(arguments);
 		});
 		global.on("add", function() {
 			console.log("Add:");
 			console.log(arguments);
 		});
-
-
+		global.on("ChangeProperty:test2.test3", function() {
+			console.log("ChangeProperty:test2.test3");
+			console.log(arguments);
+		})
 	})
 
 	function run() {
+
 		var grp = draw("0px","0px" ,"250px","50px", 0);
 		four.scene.add(grp);
 
@@ -92,12 +103,12 @@
 			}*/
 
 			four.on('update', function(frameCount) {
-			  if (four.scene.scale > 0.9999) {
-			    four.scene.scale = four.scene.rotationRadians = 0;
+			  if (grp.scale > 0.9999) {
+			    grp.scale = grp.rotationRadians = 0;
 			  }
-			  var t = (1 - four.scene.scale) * 0.125;
-			  four.scene.scale += t;
-			  four.scene.rotationDegrees = four.scene.scale * (360);
+			  var t = (1 - grp.scale) * 0.125;
+			  grp.scale += t;
+			  grp.rotationDegrees = grp.scale * (360);
 			});
 
 		}
