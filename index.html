@@ -8,7 +8,8 @@
 		<script src="javascripts/two.js" type="text/javascript" charset="utf-8"></script>
 		<script src="javascripts/carota.js" type="text/javascript" charset="utf-8"></script>
 		<script src="javascripts/four.js" type="text/javascript" charset="utf-8"></script>
-		<script src="javascripts/model.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/stemo.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/styler.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
 	</head>
 <body>
@@ -26,35 +27,118 @@
 			text4: 3
 		},
 		text3: [
-			"fuck",
-			"balls"
+			"one",
+			"two"
 		]
 	};
 	var global;
+
+
+	var screenSizes = {
+		mediaaspectratio: [
+			{
+				where: {
+					aspectratio: 1.3333332
+				},
+				name: "screen"
+			},
+			{
+				where: {
+					aspectratio: 1.7777776
+				},
+				name: "widescreen"
+			},
+			{
+				where: {
+					aspectratio: 100000000
+				},
+				name: "extrawidescreen"
+			}
+		],
+		mediasize: [
+			{
+				where: {
+					width:520,
+					height: 520
+				},
+				name: "small"
+			},
+			{
+				where: {
+					width: 760,
+					height: 760
+				},
+				name: "medium"
+			},
+			{
+				where: {
+					width: 1024,
+					height: 1024
+				},
+				name: "large"
+			},
+			{
+				where: {
+					width: 1000000000,
+					height: 100000000
+				},
+				name: "extralarge"
+			}
+		]
+	};
+
+	var defaultStyleJSON = [
+		{
+			_selector: "rectangle",
+			_attributes: {}
+		},
+		{
+			_selector: "circle",
+			_attributes: {}
+		}
+	];
+	var commonStyleJSON = [
+		{
+			_selector: ".border-black-1",
+			_attributes: {
+				stroke: "black",
+				lineWidth: "1px"
+			}
+		},
+		{
+			_selector: ".background-transparent",
+			_attributes: {
+				fill: "rgba(0,0,0,0)"
+			}
+		}
+	];
+	var styler;
 
 	$(function() {
 		four = new Four();
 		$('body').append(four.domElement);	
 		run();
 
-		global = model(globalJSON, "global");
+		global = new Stemo(globalJSON, "global");
 
-		global.on("ChangeProperty", function() {
-			console.log("ChangeProperty:");
-			console.log(arguments);
-		});
-		global.on("ChangeObject", function() {
-			console.log("ChangeObject:");
+		global.on("change", function() {
+			console.log("Change:");
 			console.log(arguments);
 		});
 		global.on("add", function() {
 			console.log("Add:");
 			console.log(arguments);
 		});
-		global.on("ChangeProperty:test2.test3", function() {
-			console.log("ChangeProperty:test2.test3");
+		global.on("remove", function() {
+			console.log("Remove:");
 			console.log(arguments);
-		})
+		});
+
+		styler = new Styler(screenSizes);
+		styler.add("default", defaultStyleJSON);
+		styler.add("common", commonStyleJSON);
+
+
 	})
 
 	function run() {
