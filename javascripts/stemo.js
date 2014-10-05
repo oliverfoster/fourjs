@@ -181,6 +181,7 @@
 			}
 		},
 		set: function(path, value) {
+			if (path === undefined || path == "") throw new Error("Cannot set undefined path");
 		    var a = path.split('.');
 		    var o = this;
 		    for (var i = 0; i < a.length - 1; i++) {
@@ -213,6 +214,7 @@
 		    return this;
 		},
 		get: function(path) {
+			if (path === undefined || path == "") return this;
 		    var o = this;
 		    path = path.replace(/\[(\w+)\]/g, '.$1');
 		    path = path.replace(/^\./, '');

@@ -1,5 +1,9 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<!--[if IE 7 ]><html class="ie ie7 no-js" lang="en"><![endif]-->
+<!--[if IE 8 ]><html class="ie ie8 no-js" lang="en"><![endif]-->
+<!--[if IE 9 ]><html class="ie ie9 no-js" lang="en"><![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
 	<head>
 		<script src="javascripts/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="javascripts/jquery.v2.js" type="text/javascript" charset="utf-8"></script>
@@ -9,7 +13,9 @@
 		<script src="javascripts/carota.js" type="text/javascript" charset="utf-8"></script>
 		<script src="javascripts/four.js" type="text/javascript" charset="utf-8"></script>
 		<script src="javascripts/stemo.js" type="text/javascript" charset="utf-8"></script>
-		<script src="javascripts/styler.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/bowser.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/styles.js" type="text/javascript" charset="utf-8"></script>
+		<script src="javascripts/decorator.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
 	</head>
 <body>
@@ -33,86 +39,22 @@
 	};
 	var global;
 
+	var styles, decorator;
 
-	var screenSizes = {
-		mediaaspectratio: [
-			{
-				where: {
-					aspectratio: 1.3333332
-				},
-				name: "screen"
-			},
-			{
-				where: {
-					aspectratio: 1.7777776
-				},
-				name: "widescreen"
-			},
-			{
-				where: {
-					aspectratio: 100000000
-				},
-				name: "extrawidescreen"
-			}
-		],
-		mediasize: [
-			{
-				where: {
-					width:520,
-					height: 520
-				},
-				name: "small"
-			},
-			{
-				where: {
-					width: 760,
-					height: 760
-				},
-				name: "medium"
-			},
-			{
-				where: {
-					width: 1024,
-					height: 1024
-				},
-				name: "large"
-			},
-			{
-				where: {
-					width: 1000000000,
-					height: 100000000
-				},
-				name: "extralarge"
-			}
-		]
+	var testNode = {
+		_type: "rectangle",
+		_className: "chromeTest"
 	};
 
-	var defaultStyleJSON = [
-		{
-			_selector: "rectangle",
-			_attributes: {}
-		},
-		{
-			_selector: "circle",
-			_attributes: {}
-		}
-	];
-	var commonStyleJSON = [
-		{
-			_selector: ".border-black-1",
-			_attributes: {
-				stroke: "black",
-				lineWidth: "1px"
-			}
-		},
-		{
-			_selector: ".background-transparent",
-			_attributes: {
-				fill: "rgba(0,0,0,0)"
-			}
-		}
-	];
-	var styler;
+	var testNode1 = {
+		_type: "circle",
+		_className: "chromeTest"
+	};
+
+	var tnStyle, tnStyle1;
+	var tnAppl;
+
+	
 
 	$(function() {
 		four = new Four();
@@ -134,10 +76,32 @@
 			console.log(arguments);
 		});
 
-		styler = new Styler(screenSizes);
-		styler.add("default", defaultStyleJSON);
-		styler.add("common", commonStyleJSON);
+		styles = new Styles();
 
+		var stylesheets = [
+			"styles/default.json",
+			"styles/common.json"
+		];
+
+		var defaultProperties = [
+			"stroke",
+			"shadowBlur",
+			"lineWidth",
+			"shadowOffsetX",
+			"shadowOffsetY",
+			"fill",
+			"opacity",
+			"text",
+			"image"
+		];
+
+		styles.load(stylesheets, function(totalTime) {
+			var t = (new Date()).getTime();
+			decorator = new Decorator(this, defaultProperties);
+			tnStyle = decorator.getDecoration(testNode);
+			tnStyle1 = decorator.getDecoration(testNode1);
+			console.log("done in:" + (((new Date()).getTime() - t) + totalTime));
+		});
 
 	})
 

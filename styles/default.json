@@ -1,0 +1,33 @@
+[
+	{
+		"_selector": "*",
+		"_attributes": {
+			
+		}
+	},
+	{
+		"_selector": "rectangle, square, circle, line, ellipse, polygon",
+		"_attributes": {
+			"shadowBlur": 0,
+			"shadowOffsetX": 0,
+			"shadowOffsetY": 0,
+			"x": 0,
+			"y": 0,
+			"height": 0,
+			"width": 0
+		}
+	},
+	{
+		"_selector": "rectangle, square",
+		"_attributes": {
+			"stroke": "black",
+			"strokeWidth": 1
+		}
+	},
+	{
+		"_selector": "circle",
+		"_attributes": {
+			"yup": "this is the circle style!"
+		}
+	}
+]

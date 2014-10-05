@@ -1,0 +1,66 @@
+[
+	{
+		"_selector": ".border-black-1",
+		"_attributes": {
+			"stroke": "black",
+			"lineWidth": "1px"
+		}
+	},
+	{
+		"_selector": ".background-transparent",
+		"_attributes": {
+			"fill": "rgba(0,0,0,0)"
+		}
+	},
+	{
+		"_selector": ".border-black-1.background-transparent",
+		"_attributes": {
+			"stroke": "black",
+			"lineWidth": "1px",
+			"fill": "rgba(0,0,0,0)"
+		}
+	},
+	{
+		"_selector": ".chromeTest.doubleSelector",
+		"_attributes": {
+			"stroke": "black",
+			"lineWidth": "1px"
+		}
+	},
+	{
+		"_selector": "rectangle.chromeTest",
+		"_attributes": {
+			"layer": "another one"
+		}
+	},
+	{
+		"_selector": ".chromeTest%extrawidescreen",
+		"_attributes": {
+			"screenType": "extrawidescreen"
+		}
+	},
+	{
+		"_selector": ".chromeTest%widescreen",
+		"_attributes": {
+			"screenType": "widescreen"
+		}
+	},
+	{
+		"_selector": ".chromeTest%normal",
+		"_attributes": {
+			"screenType": "normal"
+		}
+	},
+	{
+		"_selector": ".chromeTest%portrait",
+		"_attributes": {
+			"screenType": "portrait"
+		}
+	},
+	{
+		"_selector": "rectangle",
+		"_attributes": {
+			"text": "rectangle text"
+		}
+	}
+]
